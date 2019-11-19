@@ -24,7 +24,7 @@ if outname[-2:] == ".c":
 pos = outname.find(".")
 if pos > 0:
     outname = outname[:pos]
-include_re = re.compile("^#[\s]*include (\".*\").*$")
+include_re = re.compile("^#[\s]*include (\".*\").*$|^#[\s]*include (<open62541/.*>).*$")
 guard_re = re.compile("^#(?:(?:ifndef|define)\s*[A-Z_]+_H_|endif /\* [A-Z_]+_H_ \*/|endif // [A-Z_]+_H_|endif\s*/\*\s*!?[A-Z_]+_H[_]+\s*\*/)")
 
 print ("Starting amalgamating file "+ args.outfile)
@@ -51,19 +51,6 @@ if is_c:
     file.write(u'''#ifndef UA_DYNAMIC_LINKING_EXPORT
 # define UA_DYNAMIC_LINKING_EXPORT
 # define MDNSD_DYNAMIC_LINKING
-#endif
-
-/* Enable POSIX features */
-#if !defined(_XOPEN_SOURCE) && !defined(_WRS_KERNEL)
-# define _XOPEN_SOURCE 600
-#endif
-#ifndef _DEFAULT_SOURCE
-# define _DEFAULT_SOURCE
-#endif
-/* On older systems we need to define _BSD_SOURCE.
- * _DEFAULT_SOURCE is an alias for that. */
-#ifndef _BSD_SOURCE
-# define _BSD_SOURCE
 #endif
 
 /* Disable security warnings for BSD sockets on MSVC */

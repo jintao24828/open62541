@@ -5,11 +5,7 @@
 #ifndef TESTING_CLOCK_H_
 #define TESTING_CLOCK_H_
 
-#include "ua_types.h"
-
-/**
- * Simulate the system clock
- * ------------------------- */
+#include <open62541/types.h>
 
 /* The testing clock is used for reproducible unit tests that require precise
  * timings. It implements the following functions from ua_types.h. They return a
@@ -23,10 +19,5 @@ void UA_fakeSleep(UA_UInt32 duration);
 
 /* Sleep for the duration in milliseconds. Used to wait for workers to complete. */
 void UA_realSleep(UA_UInt32 duration);
-
-/* Sleep for the duration in milliseconds and update the current time.
- * combines fakeSleep and realSleep.
- * */
-void UA_comboSleep(UA_UInt32 duration);
 
 #endif /* TESTING_CLOCK_H_ */
